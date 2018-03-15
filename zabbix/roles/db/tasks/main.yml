@@ -1,0 +1,24 @@
+---
+- name: install mysql
+  yum: name={{ item }} state=installed
+  with_items:
+    - mariadb
+    - mariadb-server
+    - MySQL-python
+#  notify: restart mysql
+
+- name: start mysql
+  service: name=mariadb state=started enabled=yes
+
+- name: create zabbix database
+  mysql_db: name={{ DBName }} encoding=utf8 state=present
+
+- name: grant db user
+  mysql_user: name={{ DBUser }} password={{ DBPassword }} priv={{ DBName }}.*:ALL host={{ DBHost }} state=present
+  notify: enable mysql
+
+- name: Restore zabbix data
+  mysql_db: name={{ DBUser }} state=import target={{ DBData }}
+  notify: 
+   - start zabbix server
+   - http

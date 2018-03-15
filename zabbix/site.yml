@@ -1,0 +1,24 @@
+---
+#install zabbix playbook
+
+- name: apply zabbix  configuration to zabbix master nodes
+  hosts: zabbix
+  remote_user: root
+
+  roles:
+    - zabbix
+
+#- name: deploy mysql and configure the databases
+#  hosts: db
+#  remote_user: root
+#
+#  roles:
+#   - db
+
+- name: apply agent confiuration to zabbix agent nodes
+  hosts: agent
+  remote_user: root
+
+  roles:
+    - agent
+

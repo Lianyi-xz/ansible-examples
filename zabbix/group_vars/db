@@ -1,0 +1,6 @@
+---
+DBName: zabbix
+DBUser: zabbix
+DBPassword: Aa123456
+DBHost: 127.0.0.1
+DBData: /usr/share/doc/zabbix-server-mysql-3.2.11/create.sql.gz

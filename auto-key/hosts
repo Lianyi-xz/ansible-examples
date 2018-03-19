@@ -1,0 +1,4 @@
+---
+[centos]
+10.10.0.129  ansible_ssh_pass=Lianyizhiwai6
+10.10.0.135  ansible_ssh_pass=Lianyizhiwai6

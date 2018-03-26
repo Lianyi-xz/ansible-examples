@@ -1,0 +1,28 @@
+---
+- name: install java 1.8
+  yum: name=java-1.8.0-openjdk state=present
+
+- name: open port 80
+  firewalld: port=80/tcp permanent=true state=enabled immediate=yes
+  when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
+
+- name: open port 8080
+  firewalld: port=8080/tcp permanent=true state=enabled immediate=yes
+  when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
+  notify: restart firewalld
+
+- name: Install Tomcat init script
+  copy: src=tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
+
+- name: download tomcat
+  get_url:
+    url: http://mirrors.hust.edu.cn/apache/tomcat/tomcat-8/v8.5.29/bin/apache-tomcat-8.5.29.tar.gz
+    dest: /tmp/apache-tomcat-8.5.29.tar.gz
+
+- name: unzip tomcat
+  unarchive:
+    src: /tmp/apache-tomcat-8.5.29.tar.gz  
+    dest: /usr/local/
+    remote_src: yes
+  notify: restart tomcat
+

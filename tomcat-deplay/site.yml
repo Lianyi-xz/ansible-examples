@@ -1,0 +1,9 @@
+---
+#install tomcat playbook
+
+- name: deplay  tomcat application to tomcat nodes
+  hosts: tomcat
+  remote_user: root
+
+  roles:
+   - tomcat 

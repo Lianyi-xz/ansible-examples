@@ -10,6 +10,11 @@ ip  ansible_ssh_pass=passwd
 
 ### 运行
 ```bash
-ansible-playbook -i hosts main.yml 
+ansible-playbook -i hosts -e 'host_key_checking=False' main.yml 
+```
+
+### 验证
+```bash
+ansible -i hosts centos -m ping
 ```
 

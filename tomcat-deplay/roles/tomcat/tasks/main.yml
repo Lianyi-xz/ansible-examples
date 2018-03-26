@@ -1,0 +1,23 @@
+---
+- name: conf change
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_item:
+    - {
+      src: server.xml.j2
+      dest: "{{ tomcat_path}}/conf/server.xml"
+    }
+    - {
+      src: web.xml.j2
+      dest: "{{ tomcat_path}}/conf/web.xml"
+    }
+    - {
+    }
+  notify: stop tomcat
+
+- name: delete old app
+  
+- name: deplay new app
+
+

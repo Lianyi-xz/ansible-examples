@@ -1,4 +1,5 @@
 ---
 [centos]
-10.10.0.129  ansible_ssh_pass=123456
-10.10.0.135  ansible_ssh_pass=123456
+10.10.0.1  ansible_ssh_pass=123456
+10.10.0.2  ansible_ssh_pass=123456
+10.10.0.3  ansible_ssh_pass=123456

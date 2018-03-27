@@ -8,4 +8,6 @@
 ```bash
 ansible-playbook -i hosts site.yml -v
 ```
-未完成
+### 存在问题
+* war包需手动上传到ansible-examples/tomcat-deplay/roles/tomcat/files文件夹中
+* 旧war包未备份，直接删除

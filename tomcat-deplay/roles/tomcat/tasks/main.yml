@@ -1,23 +1,29 @@
 ---
+- name: stop tomcat
+  service: name=tomcat state=stopped
+
+- name: remove old app
+  file: 
+    path: "{{ tomcat_path }}/webapps/{{ tomcat_app }}"
+    state: absent
+
+- name: deplay new app
+  copy: src=test.war dest={{ tomcat_path }}/webapps/
+
 - name: conf change
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-  with_item:
+  with_items:
     - {
-      src: server.xml.j2
-      dest: "{{ tomcat_path}}/conf/server.xml"
-    }
+      src: server.xml.j2,
+      dest: "{{ tomcat_path }}/conf/server.xml"
+      }
     - {
-      src: web.xml.j2
-      dest: "{{ tomcat_path}}/conf/web.xml"
-    }
-    - {
-    }
-  notify: stop tomcat
+      src: web.xml.j2,
+      dest: "{{ tomcat_path }}/conf/web.xml"
+      }
+  notify: restart tomcat
 
-- name: delete old app
-  
-- name: deplay new app
 
 

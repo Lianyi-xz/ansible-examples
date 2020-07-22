@@ -3,10 +3,8 @@
   gather_facts: no
 
   tasks:
-
 #  - name: ANSIBLE_HOST_KEY_CHECKING
 #    command: export ANSIBLE_HOST_KEY_CHECKING=False
-
   - name: install ssh key
     authorized_key:
       user: root

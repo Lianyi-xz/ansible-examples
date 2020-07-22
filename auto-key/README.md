@@ -1,3 +1,13 @@
+### 修改配置
+```bash
+vim /etc/ansible/ansible.cfg
+host_key_checking = False
+```
+### 关闭selinux
+```bash
+sed -i 's#enforcing#disabled#g' /etc/selinux/config
+setenforce 0
+```
 ### 生成ssh
 ```bash
 ssh-keygen -t rsa -b 2048 -P '' -f /root/.ssh/id_rsa

@@ -1,0 +1,15 @@
+---
+#install web playbook
+- name: init os
+  hosts: all
+
+  roles:
+    - init
+
+#- name: apply zookeeper configuration to all nodes
+#  hosts: zook 
+#  remote_user: root
+#
+#  roles:
+#   - zookeeper
+

@@ -1,0 +1,35 @@
+---
+- name: Create install  directory if it does not exist
+  file:
+    path: /opt/install
+    state: directory
+    mode: '0755'
+#关闭防火墙
+#关闭iptables
+#添加hosts
+#解压zook
+#修改zook.cfg文件
+# yum yum install libselinux-python
+
+- name: install rely on package
+  yum: name={{ item }} state=installed
+  with_items:
+   - libselinux-python
+
+- name: ntp date
+  shell: ntpdate {{ ntp_server }}
+
+- name: stop selinux
+  selinux:
+    state: disabled
+
+- name: stop firewalld
+  service:
+    name: firewalld
+    state: stopped
+    enbale: no 
+  when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
+
+- name: stop iptables
+  shell: service iptables stop;chkconfig iptables off 
+  when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"

@@ -1,0 +1,63 @@
+---
+- name: Create install  directory if it does not exist
+  file:
+    path: /opt/install
+    state: directory
+    mode: '0755'
+#关闭防火墙
+#关闭iptables
+#添加hosts
+#解压zook
+#修改zook.cfg文件
+
+- name: stop firewalld
+  service:
+    name: firewalld
+    state: stopped
+    enbale: no 
+
+- name: upload zabbix gz
+  copy: src=zabbix-3.4.15.tar.gz dest=/home
+
+- name: unzip zabbix gz
+  unarchive:
+    src: /home/zabbix-3.4.15.tar.gz
+    dest: /home
+    remote_src: yes
+
+- name: add group zabbix
+  group:
+    name: zabbix
+    state: present
+
+- name: add user zabbix
+  user:
+    name: zabbix
+    group: zabbix
+
+- name: remove zabbix gz
+  file:
+    path: /home/zabbix-3.4.15.tar.gz
+    state: absent
+
+- name: yum instal pre
+  shell: yum install -y pcre*
+
+- name: configure zabbix agent
+  shell: cd /home/zabbix-3.4.15;sh configure --enable-agent;make install
+
+- name: remove zabix make
+  file:
+    path: /home/zabbix-3.4.15
+    state: absent
+
+- name: conf change
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - {
+      src: zabbix_agentd.conf.j2,
+      dest: "/usr/local/etc/zabbix_agentd.conf"
+      }
+  notify: restart zabbix agent

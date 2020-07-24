@@ -1,0 +1,7 @@
+[zook]
+ZOOK1  ansible_ssh_host=192.168.174.134
+ZOOK2  ansible_ssh_host=192.168.174.135
+ZOOK3  ansible_ssh_host=192.168.174.136
+
+[zook:vars]
+ntp_server=192.168.174.128
